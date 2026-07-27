@@ -1,51 +1,94 @@
-venv/
-.venv/
-env/
-
+# ==========================
+# Python
+# ==========================
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+*.so
 
-.coverage
-.coverage.*
-htmlcov/
+# ==========================
+# Virtual Environment
+# ==========================
+venv/
+.venv/
+env/
 
-.DS_Store
-Thumbs.db
-
+# ==========================
+# IDE
+# ==========================
 .vscode/
 .idea/
 
+# ==========================
+# OS Files
+# ==========================
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Logs
+# ==========================
 logs/
 *.log
 
-output/
+# ==========================
+# Environment Variables
+# ==========================
+.env
+.env.*
 
-airflow/logs/
-airflow/airflow.db
-airflow/webserver_config.py
+# ==========================
+# Python Cache
+# ==========================
+.pytest_cache/
+.ipynb_checkpoints/
+.mypy_cache/
 
+# ==========================
+# Spark
+# ==========================
 spark-warehouse/
 metastore_db/
-derby.log
+*.crc
+_SUCCESS
 
-*.egg-info/
-build/
-dist/
+# ==========================
+# ETL Output
+# ==========================
+output/
 
-*.csv.tmp
-*.parquet
-
-config/*.local.yaml
-config/*.secret.yaml
+# ==========================
+# Local Credentials (Never Commit)
+# ==========================
+service-account.json
+application_default_credentials.json
 *.pem
 *.key
-*.p12
-*.json
 
-!.github/
-!.github/workflows/
+# ==========================
+# Build Files
+# ==========================
+build/
+dist/
+*.egg-info/
+
+# ==========================
+# Terraform (Future Projects)
+# ==========================
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+
+# ==========================
+# Airflow
+# ==========================
+airflow/logs/
+airflow/airflow.db
+airflow/standalone_admin_password.txt
+
+# ==========================
+# Mac/Linux Temporary Files
+# ==========================
+*.swp
+*.swo

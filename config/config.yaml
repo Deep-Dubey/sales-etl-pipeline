@@ -1,20 +1,22 @@
 project:
-  name: <project-name>
+  name: sales-etl-pipeline
   environment: dev
 
 gcp:
-  project_id: <project-id>
+  project_id: project-eac6eab1-4acc-46e1-81e
+  region: us
 
 storage:
-  raw_bucket: <raw-bucket>
-  processed_bucket: <processed-bucket>
+  raw_bucket: sales-raw-data-project-eac6eab1-4acc-46e1-81e
+  processed_bucket: sales-processed-data-project-eac6eab1-4acc-46e1-81e
+  logs_bucket: sales-logs-project-eac6eab1-4acc-46e1-81e
+  temp_bucket: sales-temp-project-eac6eab1-4acc-46e1-81e
 
 input:
-  folder: input
-  file_name: sales.csv
+  sales_file: gs://sales-raw-data-project-eac6eab1-4acc-46e1-81e/input/sales.csv
 
 output:
-  folder: processed/sales
+  parquet_path: gs://sales-processed-data-project-eac6eab1-4acc-46e1-81e/processed/sales/
 
 bigquery:
   dataset: sales_dw

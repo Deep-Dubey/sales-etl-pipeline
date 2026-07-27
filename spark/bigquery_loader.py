@@ -3,6 +3,9 @@ from spark.common import load_config
 
 
 def load_sales_to_bigquery():
+    """
+    Load partitioned Parquet files from GCS into BigQuery.
+    """
 
     config = load_config()
 
@@ -16,10 +19,7 @@ def load_sales_to_bigquery():
         f"{config['bigquery']['table']}"
     )
 
-    source_uri = (
-        f"gs://{config['storage']['processed_bucket']}/"
-        f"{config['output']['folder']}/*"
-    )
+    source_uri = config["output"]["parquet_path"] + "*"
 
     print(f"Project   : {config['gcp']['project_id']}")
     print(f"Table ID  : {table_id}")

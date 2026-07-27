@@ -2,19 +2,17 @@ from spark.common import load_config
 
 
 def write_parquet(df):
+    """
+    Write transformed data as partitioned Parquet to GCS.
+    """
 
     config = load_config()
-
-    output_path = (
-        f"gs://{config['storage']['processed_bucket']}/"
-        f"{config['output']['folder']}"
-    )
 
     (
         df.write
         .mode("overwrite")
         .partitionBy("sale_year", "sale_month")
-        .parquet(output_path)
+        .parquet(config["output"]["parquet_path"])
     )
 
-    print(f"Data written successfully to {output_path}")
+    print("Partitioned Parquet written successfully to GCS")

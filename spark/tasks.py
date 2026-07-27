@@ -4,39 +4,58 @@ from spark.bigquery_loader import load_sales_to_bigquery
 
 
 def check_sales_file():
+    """
+    Check whether the input sales file exists in GCS.
+    """
+
     config = load_config()
 
     client = storage.Client()
 
-    bucket = client.bucket(config["storage"]["raw_bucket"])
+    bucket_name = config["storage"]["raw_bucket"]
 
-    blob = bucket.blob(
-        f"{config['input']['folder']}/{config['input']['file_name']}"
+    # Extract object path from gs://bucket/path
+    object_name = config["input"]["sales_file"].replace(
+        f"gs://{bucket_name}/", ""
     )
 
-    if not blob.exists():
-        raise FileNotFoundError("sales.csv not found.")
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(object_name)
 
-    print("sales.csv found.")
+    if not blob.exists():
+        raise FileNotFoundError(f"{object_name} not found.")
+
+    print(f"Input file found: {object_name}")
 
 
 def validate_output():
+    """
+    Validate that Spark has written output files to GCS.
+    """
+
     config = load_config()
 
     client = storage.Client()
 
-    bucket = client.bucket(config["storage"]["processed_bucket"])
+    bucket_name = config["storage"]["processed_bucket"]
 
-    blobs = list(
-        bucket.list_blobs(prefix=f"{config['output']['folder']}/")
+    output_prefix = config["output"]["parquet_path"].replace(
+        f"gs://{bucket_name}/", ""
     )
 
-    if len(blobs) == 0:
-        raise Exception("Output not created.")
+    bucket = client.bucket(bucket_name)
 
-    print("Output validated.")
+    blobs = list(bucket.list_blobs(prefix=output_prefix))
+
+    if not blobs:
+        raise Exception("No output files found in GCS.")
+
+    print("Output validation successful.")
 
 
 def load_to_bigquery():
+    """
+    Load processed Parquet data into BigQuery.
+    """
 
     load_sales_to_bigquery()

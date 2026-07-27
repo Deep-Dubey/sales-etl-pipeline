@@ -2,13 +2,14 @@ from pyspark.sql.functions import (
     col,
     current_timestamp,
     year,
-    month
+    month,
+    to_date
 )
 
 
 def calculate_total_amount(df):
     """
-    Calculate Total Sale Amount
+    Calculate total sale amount.
     """
 
     return df.withColumn(
@@ -19,7 +20,7 @@ def calculate_total_amount(df):
 
 def add_processing_timestamp(df):
     """
-    Add ETL Processing Timestamp
+    Add ETL processing timestamp.
     """
 
     return df.withColumn(
@@ -28,9 +29,21 @@ def add_processing_timestamp(df):
     )
 
 
+def convert_sale_date(df):
+    """
+    Convert sale_date from string to DateType.
+    Invalid dates become NULL.
+    """
+
+    return df.withColumn(
+        "sale_date",
+        to_date(col("sale_date"), "yyyy-MM-dd")
+    )
+
+
 def add_partition_columns(df):
     """
-    Create Partition Columns
+    Create partition columns from sale_date.
     """
 
     return (
