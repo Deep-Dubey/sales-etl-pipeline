@@ -1,0 +1,24 @@
+project:
+  name: <project-name>
+  environment: dev
+
+gcp:
+  project_id: <project-id>
+
+storage:
+  raw_bucket: <raw-bucket>
+  processed_bucket: <processed-bucket>
+
+input:
+  folder: input
+  file_name: sales.csv
+
+output:
+  folder: processed/sales
+
+bigquery:
+  dataset: sales_dw
+  table: sales_fact
+
+spark:
+  app_name: Sales ETL Pipeline

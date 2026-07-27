@@ -1,0 +1,3 @@
+from spark.bigquery_loader import load_sales_to_bigquery
+
+load_sales_to_bigquery()
